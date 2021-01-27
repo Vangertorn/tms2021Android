@@ -104,13 +104,10 @@ public class Homework3 {
      * Method should print all prime numbers < 1000
      */
     public static void printPrimeNumbers() {
-      ///  int[] array = new int[1000];
         int number = 1000;
         int a;
-
-        //System.out.print("2\t3\t");
         for (int i = 2; i < number; i++) {
-           a = i;
+            a = i;
             boolean isPrime = true;
             for (int j = 2; j <= Math.sqrt(a); j++) {
                 if (a % j == 0) {
@@ -120,7 +117,7 @@ public class Homework3 {
                     continue;
                 }
             }
-            if (isPrime == true){
+            if (isPrime == true) {
                 System.out.print(a + "\t");
             }
         }
