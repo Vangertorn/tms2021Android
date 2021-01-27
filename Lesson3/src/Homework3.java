@@ -107,17 +107,21 @@ public class Homework3 {
       ///  int[] array = new int[1000];
         int number = 1000;
         int a;
-        System.out.print("2\t3\t");
+
+        //System.out.print("2\t3\t");
         for (int i = 2; i < number; i++) {
            a = i;
+            boolean isPrime = true;
             for (int j = 2; j <= Math.sqrt(a); j++) {
                 if (a % j == 0) {
+                    isPrime = false;
                     break;
                 } else if (j + 1 <= Math.sqrt(a)) {
                     continue;
-                } else {
-                    System.out.print(a + "\t");
                 }
+            }
+            if (isPrime == true){
+                System.out.print(a + "\t");
             }
         }
     }
