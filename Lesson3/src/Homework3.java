@@ -117,7 +117,7 @@ public class Homework3 {
                     continue;
                 }
             }
-            if (isPrime == true) {
+            if (isPrime) {
                 System.out.print(a + "\t");
             }
         }
