@@ -25,8 +25,7 @@ public class Computer {
     }
 
     public void enable() {
-        if (this.condition == 0 || this.counter >= this.limitCounter) {
-            System.out.println("the computer burned down");
+        if (checkComputer(this.condition, this.counter) == 0) {
             return;
         }
         Random random = new Random();
@@ -34,7 +33,7 @@ public class Computer {
         //      It's string for wimps;
 //                System.out.println(b);
         Scanner scanner = new Scanner(System.in);
-        System.out.println("You enable computer enter number 1 or 0");
+        System.out.println("You enable computer enter number 1 or 0 for enable");
         int a = scanner.nextInt();
         if (a == b) {
             this.condition = 1;
@@ -42,16 +41,11 @@ public class Computer {
         } else {
             this.condition = 0;
         }
-        if (this.condition == 0) {
-
-            System.out.println("the computer burned down");
-            return;
-        }
+        checkComputer1(this.condition);
     }
 
     public void off() {
-        if (this.condition == 0 || this.counter >= this.limitCounter) {
-            System.out.println("the computer burned down");
+        if (checkComputer(this.condition, this.counter) == 0) {
             return;
         }
         Random random = new Random();
@@ -59,7 +53,7 @@ public class Computer {
         //       It's string for wimps;
 //                System.out.println(b);
         Scanner scanner = new Scanner(System.in);
-        System.out.println("You turn off computer enter number 1 or 0");
+        System.out.println("You turn off computer enter number 1 or 0 for off");
         int a = scanner.nextInt();
         if (a == b) {
             this.condition = 1;
@@ -67,11 +61,27 @@ public class Computer {
         } else {
             this.condition = 0;
         }
-        if (this.condition == 0) {
-            System.out.println("the computer burned down");
-            return;
-        }
+        checkComputer1(this.condition);
 
+
+    }
+
+    private int checkComputer(int condition, int counter) {
+        condition = this.condition;
+        counter = this.counter;
+        if (condition == 0 || counter >= this.limitCounter) {
+            System.out.println("the computer burned down");
+            return 0;
+        }
+        return 1;
+
+    }
+
+    private void checkComputer1(int condition) {
+        condition = this.condition;
+        if (condition == 0) {
+            System.out.println("the computer burned down");
+        }
     }
 
 
