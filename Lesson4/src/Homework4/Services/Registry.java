@@ -16,13 +16,14 @@ public class Registry {
 
     public List<Person> getPeople(Address address) {
         List<Person> people = new LinkedList<>();
-        for (Person person : citizen) {
-            Address personsAddress = person.getAddress();
+        for (Person p : citizen) {
+            Address personsAddress = p.getAddress();
             if (personsAddress.getCountry().equals(address.getCountry())) {
-                people.add(person);
+                people.add(p);
             }
         }
         return people;
+
     }
 
     public Person[] getCitizen() {
@@ -32,6 +33,4 @@ public class Registry {
     public void setCitizen(Person[] citizen) {
         this.citizen = citizen;
     }
-
-
 }
