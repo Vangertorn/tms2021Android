@@ -10,16 +10,25 @@ public class MilitaryPart {
 
     private int size;
     private Person[] sizeMilitary;
+    private int freeSpace;
 
 
-    public MilitaryPart(List<Person> fitPeople) {
+    public MilitaryPart(int size) {
+        this.size = size;
+        this.freeSpace = size;
+        sizeMilitary = new Person[size];
+
+    }
+
+    public MilitaryPart() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Can you enter size Military part, please\t ");
         size = scanner.nextInt();
+        this.freeSpace = size;
         sizeMilitary = new Person[size];
-        for (int i = 0; i < size; i++) {
-            sizeMilitary[i] = new Person(0, "UNNAMED", 0, "men");
-        }
+    }
+
+    public void newSoldier(List<Person> fitPeople) {
         int longList = 0;
         for (Person i : fitPeople) {
             longList++;
@@ -27,12 +36,11 @@ public class MilitaryPart {
         for (int i = 0; i < size; i++) {
             if (i > longList - 1) {
                 break;
-            } else if (sizeMilitary[i].getName() == "UNNAMED") {
+            } else if (sizeMilitary[i] == null) {
                 this.sizeMilitary[i] = fitPeople.get(i);
+                this.freeSpace--;
             }
-
         }
-
         if (size < longList) {
             for (int i = longList; i > size; i--) {
                 System.out.println(fitPeople.get(i - 1).getName() + "\tPerson doesn't enter to MilitaryPart");
@@ -42,46 +50,41 @@ public class MilitaryPart {
     }
 
     public void newSoldier(Person person) {
-        int freeSpace = sizeMilitary.length;
         for (int i = 0; i < sizeMilitary.length; i++) {
-            if (sizeMilitary[i].getName() == person.getName() && sizeMilitary[i].getAddress() == person.getAddress() && sizeMilitary[i].getAge()
-                    == person.getAge()) {
+            if (freeSpace == 0) {
+                System.out.println("Go away, MilitaryPart filled\t" + "You have nothing to do here\t" + person.getName());
+                break;
+            }
+            if (sizeMilitary[i] == null) {
+                sizeMilitary[i] = person;
+                this.freeSpace--;
+                break;
+            }
+
+            if (sizeMilitary[i] != null && sizeMilitary[i].getName().equals(person.getName()) && sizeMilitary[i].getAddress().equals(person.getAddress())
+                    && sizeMilitary[i].getAge() == person.getAge()) {
                 System.out.println("We have already taken\t" + person.getName() + "\taway");
                 break;
 
             }
-            if (sizeMilitary[i].getName() == "UNNAMED") {
-                sizeMilitary[i] = person;
-                break;
-            }
-            freeSpace--;
-
 
         }
-        if (freeSpace == 0) {
-            System.out.println("Go away, MilitaryPart filled\t" + "You have nothing to do here\t" + person.getName());
-        }
+
 
     }
 
-
     public void infoPart() {
         for (int i = 0; i < this.size; i++) {
-            if (sizeMilitary[i].getName() == "UNNAMED") {
+            if (sizeMilitary[i] == null) {
                 break;
             }
             System.out.println(sizeMilitary[i].getName());
         }
     }
 
-    public void freeSpace() {
-        int freeSpace = 0;
-        for (int i = 0; i < this.size; i++) {
-            if (sizeMilitary[i].getName() == "UNNAMED") {
-                freeSpace++;
-            }
-        }
-        System.out.println(freeSpace);
+    public int freeSpace() {
+
+        return freeSpace;
 
     }
 

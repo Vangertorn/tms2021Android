@@ -21,24 +21,25 @@ public class Main {
         Person olga = new Person(25, "Olga", 180, "women");
         Address olgasAddress = new Address("Belarus", "Minsk");
         olga.setAddress(olgasAddress);
-//        Person vova = new Person();
+        Person vova = new Person(18, "Vova", 180, "men");
+        Address vovasaddres = new Address("Belarus", "Gomel");
+        vova.setAddress(vovasaddres);
 //        Person denis = new Person();
-        Registry registry = new Registry(new Person[]{kosta, gleb, olga});
+        Registry registry = new Registry(new Person[]{kosta, gleb, olga, vova});
 
-        MilitaryEnlistmentOffice meo = new MilitaryEnlistmentOffice(registry);
+        MilitaryPart part1 = new MilitaryPart(0);
+        MilitaryPart part2 = new MilitaryPart(3);
+        MilitaryPart part3 = new MilitaryPart(0);
 
-        List<Person> personList = meo.getPeople(new Address("Belarus", "Vitebsk"));
 
-        for (Person person : personList) {
-            System.out.println(person.getName());
-        }
-        MilitaryPart part1 = new MilitaryPart(personList);
+        MilitaryEnlistmentOffice meo1 = new MilitaryEnlistmentOffice(registry, new MilitaryPart[]{part1, part3, part2});
+        meo1.getPeople(new Address("Belarus", "Vitebsk"));
+        part2.newSoldier(kosta);
 
-        part1.newSoldier(kosta);
-        part1.newSoldier(olga);
+        System.out.println(meo1.freePlays());
         part1.infoPart();
-        part1.freeSpace();
-
+        part2.infoPart();
+        part3.infoPart();
 
     }
 }
