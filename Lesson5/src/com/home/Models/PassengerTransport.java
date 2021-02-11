@@ -18,17 +18,23 @@ public class PassengerTransport extends GroundTransport {
     }
 
     public void kilometrage(int time) {
+
+        System.out.printf("For the time\t%s\tminutes\nAuto\t%s\nmove with maximal speed\t%skm/auer\ndrove\t%s\tkm\nand" +
+                " spend\t%s\tliters of fuel", time, getMake(), getMaxSpeed(), distance(time), fuelCalculation(time));
+
+
+    }
+
+    private double distance(int time) {
         double distance;
         distance = (double) time / 60 * getMaxSpeed();
-        System.out.println("For the time\t" + time + "\tminutes" + "\nAuto\t" + getMake() + "\nmove with maximal speed\t" + getMaxSpeed() + "km/auer" +
-                "\ndrove\t" + distance + "\tkm" + "\nand spend\t" + fuelCalculation(time) + "\tliters of fuel");
+        return distance;
     }
+
 
     private double fuelCalculation(int time) {
         double howFuelSpent;
-        howFuelSpent = (double)time / 60 * getMaxSpeed() * getFuelFlow() / 100;
-        System.out.println();
-
+        howFuelSpent = distance(time) * getFuelFlow() / 100;
         return howFuelSpent;
 
     }
