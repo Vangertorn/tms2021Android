@@ -1,108 +1,99 @@
 package Homework4.Services;
 
+import Homework4.Exception.PersonServesHereException;
 import Homework4.Model.Person;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class MilitaryPart {
 
-
-    private int size;
-    private Person[] sizeMilitary;
-    private int freeSpace;
+    private static int unitNumberCounter = 0;
+    private final int size;
+    private final int unitNumber;
+    private final Person[] sizeMilitary;
+    private final List<Person> recruits;
+    private int takenPlacesCount = 0;
 
 
     public MilitaryPart(int size) {
         this.size = size;
-        this.freeSpace = size;
+        unitNumber = unitNumberCounter++;
         sizeMilitary = new Person[size];
+        recruits = new LinkedList<>();
 
     }
 
-    public MilitaryPart() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Can you enter size Military part, please\t ");
-        size = scanner.nextInt();
-        this.freeSpace = size;
-        sizeMilitary = new Person[size];
+    public boolean addRecruitToList(Person person) {
+        if (getFreePlacesFromList() == 0) {
+            System.out.println("Unit number" + unitNumber + " is full");
+            return false;
+        }
+        boolean recruitExists = false;
+        try {
+            recruitExists = doesRecruitAlreadyExists(person, recruits.toArray(new Person[0]));
+        } catch (PersonServesHereException e) {
+            e.printStackTrace();
+        }
+        if (recruitExists) {
+            return false;
+        }
+        recruits.add(person);
+        return true;
     }
 
-    public void newSoldier(List<Person> fitPeople) {
-        int longList = 0;
-        for (Person i : fitPeople) {
-            longList++;
+    public boolean addRecruitToArray(Person person) {
+        if (getFreePlacesFromArray() == 0) {
+            System.out.println("Unit number" + unitNumber + " is full");
+            return false;
         }
-        for (int i = 0; i < size; i++) {
-            if (i > longList - 1) {
-                break;
-            } else if (sizeMilitary[i] == null) {
-                this.sizeMilitary[i] = fitPeople.get(i);
-                this.freeSpace--;
-            }
+        boolean recruitExists = false;
+        try {
+            recruitExists = doesRecruitAlreadyExists(person, sizeMilitary);
+        } catch (PersonServesHereException e) {
+            System.out.println(e.getMessage());
         }
-        if (size < longList) {
-            for (int i = longList; i > size; i--) {
-                System.out.println(fitPeople.get(i - 1).getName() + "\tPerson doesn't enter to MilitaryPart");
-            }
+        if (recruitExists) {
+            return false;
         }
-
+        sizeMilitary[takenPlacesCount++] = person;
+        return true;
     }
 
-    public void newSoldier(Person person) {
-        for (int i = 0; i < sizeMilitary.length; i++) {
-            if (freeSpace == 0) {
-                System.out.println("Go away, MilitaryPart filled\t" + "You have nothing to do here\t" + person.getName());
-                break;
-            }
-            if (sizeMilitary[i] == null) {
-                sizeMilitary[i] = person;
-                this.freeSpace--;
-                break;
-            }
-
-            if (sizeMilitary[i] != null && sizeMilitary[i].getName().equals(person.getName()) && sizeMilitary[i].getAddress().equals(person.getAddress())
-                    && sizeMilitary[i].getAge() == person.getAge()) {
-                System.out.println("We have already taken\t" + person.getName() + "\taway");
-                break;
-
+    public void printRecruitsFromArray() {
+        for (Person person : sizeMilitary) {
+            if (person != null) {
+                System.out.println(person.getName());
             }
 
         }
-
-
     }
 
-    public void infoPart() {
-        for (int i = 0; i < this.size; i++) {
-            if (sizeMilitary[i] == null) {
-                break;
-            }
-            System.out.println(sizeMilitary[i].getName());
+    public void printRecruitsFromList() {
+        for (Person person : recruits) {
+            System.out.println(person.getName());
         }
     }
 
-    public int freeSpace() {
 
-        return freeSpace;
+    public int getFreePlacesFromList() {
+        return size - recruits.size();
+    }
 
+    public int getFreePlacesFromArray() {
+        return size - takenPlacesCount;
     }
 
 
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public Person[] getSizeMilitary() {
-        return sizeMilitary;
-    }
-
-    public void setSizeMilitary(Person[] sizeMilitary) {
-        this.sizeMilitary = sizeMilitary;
+    public boolean doesRecruitAlreadyExists(Person person, Person[] recruits) throws PersonServesHereException {
+        for (Person recruit : recruits) {
+            if (recruit != null && recruit.getName().equals(person.getName())
+                    && recruit.getAge() == person.getAge()) {
+                throw new PersonServesHereException("person\t" + person.getName() + " already serves here");
+            }
+        }
+        return false;
     }
 }
 
