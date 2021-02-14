@@ -13,26 +13,27 @@ import java.util.List;
 
 public class Run {
     public static void main(String[] args) {
-        Robot android = new Robot(new SonyHead(10),new SonyHand(10), new SonyLeg(10),"Android");
+        Robot android = new Robot(new SonyHead(10), new SonyHand(10), new SonyLeg(10), "Android");
         android.action();
-        Robot bender = new Robot(new SamsungHead(20),new ToshibaHand(2),new SamsungLeg(10), "Bender");
+        Robot bender = new Robot(new SamsungHead(20), new ToshibaHand(2), new SamsungLeg(10), "Bender");
         bender.action();
-        Robot bostonDynamic = new Robot(new ToshibaHead(4),new SonyHand(3), new SamsungLeg(30), "Boston Dynamic");
+        Robot bostonDynamic = new Robot(new ToshibaHead(4), new SonyHand(3), new SamsungLeg(30), "Boston Dynamic");
         bostonDynamic.action();
-        {List<Robot> robots = new LinkedList<>();
-        robots.add(android);
-        robots.add(bender);
-        robots.add(bostonDynamic);
-        int max = robots.get(0).getPrice();
-        String nameMax = robots.get(0).getName();
-        for (Robot robot : robots){
-            if (robot.getPrice()>max){
-                max = robot.getPrice();
-                nameMax = robot.getName();
+        {
+            List<Robot> robots = new LinkedList<>();
+            robots.add(android);
+            robots.add(bender);
+            robots.add(bostonDynamic);
+            int max = robots.get(0).getPrice();
+            String nameMax = robots.get(0).getName();
+            for (Robot robot : robots) {
+                if (robot.getPrice() > max) {
+                    max = robot.getPrice();
+                    nameMax = robot.getName();
+                }
             }
+            System.out.println("Max price\t" + nameMax);
         }
-            System.out.println("Max price\t"+nameMax);
-       }
 
         /*
         Создать по 3 реализации(Sony, Toshiba, Samsung) каждой запчасти(IHead, IHand, ILeg)
