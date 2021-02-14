@@ -23,6 +23,7 @@ public class Run {
         shop1.addShop(android);
         shop1.addShop(bender);
         shop1.addShop(bostonDynamic);
+
         shop1.maxPrice();
 
 
