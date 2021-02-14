@@ -19,21 +19,14 @@ public class Run {
         bender.action();
         Robot bostonDynamic = new Robot(new ToshibaHead(4), new SonyHand(3), new SamsungLeg(30), "Boston Dynamic");
         bostonDynamic.action();
-        {
-            List<Robot> robots = new LinkedList<>();
-            robots.add(android);
-            robots.add(bender);
-            robots.add(bostonDynamic);
-            int max = robots.get(0).getPrice();
-            String nameMax = robots.get(0).getName();
-            for (Robot robot : robots) {
-                if (robot.getPrice() > max) {
-                    max = robot.getPrice();
-                    nameMax = robot.getName();
-                }
-            }
-            System.out.println("Max price\t" + nameMax);
-        }
+        Shop shop1 = new Shop(new LinkedList<>());
+        shop1.addShop(android);
+        shop1.addShop(bender);
+        shop1.addShop(bostonDynamic);
+        shop1.maxPrice();
+
+
+
 
         /*
         Создать по 3 реализации(Sony, Toshiba, Samsung) каждой запчасти(IHead, IHand, ILeg)
