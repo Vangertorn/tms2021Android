@@ -3,6 +3,8 @@ package Homework4.Model;
 import java.util.Scanner;
 
 public class Person {
+    public static final String MALE = "men";
+    public static final String FEMAILE = "female";
     private int age;
     private String name;
     private int height;
