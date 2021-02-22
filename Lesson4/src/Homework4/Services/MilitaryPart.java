@@ -3,8 +3,7 @@ package Homework4.Services;
 import Homework4.Exception.PersonServesHereException;
 import Homework4.Model.Person;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 public class MilitaryPart {
@@ -62,12 +61,39 @@ public class MilitaryPart {
     }
 
     public void printRecruitsFromArray() {
-        for (Person person : sizeMilitary) {
-            if (person != null) {
-                System.out.println(person.getName());
-            }
+        if (getFreePlacesFromArray() == size) {
+            System.out.println("Military part  " + unitNumber + " is free!");
+        } else {
+            if (sortSizeMilitary().length == 1) {
+                System.out.println("Military part\t" + unitNumber + "\thas a following soldier");
+                System.out.println((1) + "." + "\t" + sortSizeMilitary()[0].getName() + "\t" + sortSizeMilitary()[0].getSurName());
+            } else {
+                System.out.println("Military part\t" + unitNumber + "\thas the following soldiers");
+                for (int i = 0; i < sortSizeMilitary().length; i++) {
+                    System.out.println((i + 1) + "." + "\t" + sortSizeMilitary()[i].getName() + "\t" + sortSizeMilitary()[i].getSurName());
+                }
 
+            }
+            System.out.println("This military part has\t" + getFreePlacesFromArray() + "\tfree places");
         }
+    }
+
+    private Person[] sortSizeMilitary() {
+        int count = 0;
+        for (int i = 0; i < sizeMilitary.length; i++) {
+            if (sizeMilitary[i] == null) {
+                count++;
+            }
+        }
+        Person[] sortSizeMilitary = new Person[sizeMilitary.length - count];
+        System.arraycopy(sizeMilitary, 0, sortSizeMilitary, 0, sizeMilitary.length - count);
+        Arrays.sort(sortSizeMilitary, new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                return o1.getSurName().compareTo(o2.getSurName());
+            }
+        });
+        return sortSizeMilitary;
     }
 
     public void printRecruitsFromList() {
