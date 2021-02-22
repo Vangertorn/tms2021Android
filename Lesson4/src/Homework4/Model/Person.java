@@ -1,10 +1,12 @@
 package Homework4.Model;
 
+import Homework4.Exception.NameContainSpace;
+
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class Person implements Comparable<Person>{
+public class Person implements Comparable<Person> {
     public static final String MALE = "men";
     public static final String FEMALE = "female";
     private int age;
@@ -32,10 +34,18 @@ public class Person implements Comparable<Person>{
 
     }
 
-    public Person(int age, String name, String surName, int height, String gender) {
+    public Person(int age, String name, String surName, int height, String gender) throws NameContainSpace {
         this.age = age;
-        this.name = name;
-        this.surName = surName;
+        this.name = name.trim();
+        this.name = this.name.substring(0, 1).toUpperCase() + this.name.substring(1).toLowerCase();
+        if ((this.name.length() - this.name.replaceAll(" ", "").length()) != 0) {
+            throw new NameContainSpace(this.name + "\t contain space, you must correct it");
+        }
+        this.surName = surName.trim();
+        this.surName = this.surName.substring(0, 1).toUpperCase() + this.surName.substring(1).toLowerCase();
+        if (this.surName.length() - this.surName.replaceAll(" ", "").length() != 0) {
+            throw new NameContainSpace(this.surName + "\t contain space, you must correct it");
+        }
         this.height = height;
         this.gender = gender;
 
@@ -54,12 +64,7 @@ public class Person implements Comparable<Person>{
     }
 
     public String getName() {
-        name.trim();
-        String newName = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
-        if ((newName.length()-newName.replaceAll(" ","").length())==0){
-            return newName;
-        }
-        return "Error, name contain space";
+        return name;
     }
 
     public void setName(String name) {
@@ -91,12 +96,7 @@ public class Person implements Comparable<Person>{
     }
 
     public String getSurName() {
-        surName.trim();
-        String newSurName = surName.substring(0,1).toUpperCase() +surName.substring(1).toLowerCase();
-        if (newSurName.length()-newSurName.replaceAll(" ","").length()==0){
-            return newSurName;
-        }
-        return "Error, name contain space";
+        return surName;
     }
 
     public void setSurName(String surName) {
@@ -143,6 +143,6 @@ public class Person implements Comparable<Person>{
      */
     @Override
     public int compareTo(Person o) {
-        return toString().compareTo(o.toString());
+        return surName.compareTo(o.surName);
     }
 }
