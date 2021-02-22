@@ -85,19 +85,8 @@ public class MilitaryPart {
                 count++;
             }
         }
-
         Person[] sortSizeMilitary = new Person[sizeMilitary.length - count];
-//        I don't know why, but this line throws StackOverflowError
-//        System.arraycopy(sizeMilitary,0,sortSizeMilitary(),0,sizeMilitary.length-count);
-        for (int i = 0; i < sizeMilitary.length; i++) {
-            for (int j = 0; j < sortSizeMilitary.length; j++) {
-                if (sizeMilitary[i] != null && sortSizeMilitary[j] == null) {
-                    sortSizeMilitary[j] = sizeMilitary[i];
-                    break;
-                }
-
-            }
-        }
+        System.arraycopy(sizeMilitary, 0, sortSizeMilitary, 0, sizeMilitary.length - count);
         Arrays.sort(sortSizeMilitary, new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
