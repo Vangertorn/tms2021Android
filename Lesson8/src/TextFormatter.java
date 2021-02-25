@@ -20,7 +20,7 @@ public class TextFormatter implements MyReader {
                 }
                 result.append(text);
             }
-            String[] line = splitOffers(result.toString());
+            String[] line = splitSentences(result.toString());
             for (int j = 0; j < line.length; j++) {
                 if (counterWord(line[j]) >= 3 && counterWord(line[j]) <= 5) {
                     fileWriter.write(line[j]);
@@ -34,7 +34,7 @@ public class TextFormatter implements MyReader {
         }
     }
 
-    public static String[] splitOffers(String string) {
+    public static String[] splitSentences(String string) {
         String[] offers = string.split("[.!?]+");
         return offers;
     }
@@ -67,7 +67,7 @@ public class TextFormatter implements MyReader {
             }
         }
         for (int i = 0; i < coincidence.length; i++) {
-            if (coincidence[i] == true) {
+            if (coincidence[i]) {
                 return true;
             }
         }
