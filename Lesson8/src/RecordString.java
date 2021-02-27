@@ -12,13 +12,11 @@ public class RecordString {
         System.out.println("Could You enter line, please");
         String string = scanner.nextLine();
         char[] writer = new RecordString().revers(string);
-
         try (FileWriter fileWriter = new FileWriter(OUTPUT_FILE, true)) {
             fileWriter.write(writer);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private char[] revers(String string) {

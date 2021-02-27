@@ -21,12 +21,36 @@ public class TextFormatter implements MyReader {
                 result.append(text);
             }
             String[] line = splitSentences(result.toString());
-            for (int j = 0; j < line.length; j++) {
-                if (counterWord(line[j]) >= 3 && counterWord(line[j]) <= 5) {
-                    fileWriter.write(line[j]);
+            for (String s : line) {
+                if (counterWord(s) >= 3 && counterWord(s) <= 5) {
+                    fileWriter.write(s);
                     continue;
-                } else if (checkPalindrome(line[j])) {
-                    fileWriter.write(line[j]);
+                } else if (checkPalindrome(s)) {
+                    fileWriter.write(s);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readerPalindromes(String nameFileForReader, String nameFileForWriter) {
+        try (FileReader fileReader = new FileReader(RESOURCE_DIR + nameFileForReader);
+             FileWriter fileWriter = new FileWriter(RESOURCE_DIR + nameFileForWriter, false)) {
+            int i;
+            StringBuilder result = new StringBuilder();
+            char[] text = new char[256];
+            while ((i = fileReader.read(text)) > -1) {
+                if (i < 256) {
+                    text = Arrays.copyOf(text, i);
+                }
+                result.append(text);
+            }
+            String[] line = result.toString().split("\\n");
+            for (String words : line) {
+                if (checkPalindrome(words)) {
+                    fileWriter.write(words);
+                    fileWriter.append((System.lineSeparator()));
                 }
             }
         } catch (IOException e) {
@@ -35,22 +59,19 @@ public class TextFormatter implements MyReader {
     }
 
     public static String[] splitSentences(String string) {
-        String[] offers = string.split("[.!?]+");
-        return offers;
+        return string.split("(?<=[.!?])\\s+");
     }
 
     public static int counterWord(String string) {
         Pattern pattern = Pattern.compile("\\b");
         Matcher matcher = pattern.matcher(string);
         int count = 0;
-        for (int i = 0; i < string.length(); i++) {
+        for (int i = 0; i < string.length(); i++)
             if (matcher.find()) {
                 count++;
             }
-        }
-        int numberWord = count / 2;
 
-        return numberWord;
+        return count / 2;
     }
 
     public static boolean checkPalindrome(String string) {
@@ -66,8 +87,8 @@ public class TextFormatter implements MyReader {
                 }
             }
         }
-        for (int i = 0; i < coincidence.length; i++) {
-            if (coincidence[i]) {
+        for (boolean b : coincidence) {
+            if (b) {
                 return true;
             }
         }
