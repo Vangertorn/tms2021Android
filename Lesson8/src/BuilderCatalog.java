@@ -23,10 +23,10 @@ public class BuilderCatalog {
 
     public void renameCatalog(String newName) {
         File newCatalog = new File(newName);
-        if (this.catalog.renameTo(newCatalog)) {
-            deletedCatalog(this.catalog);
-            this.nameCatalog = newName;
-            this.catalog = newCatalog;
+        if (catalog.renameTo(newCatalog)) {
+            deletedCatalog(catalog);
+            nameCatalog = newName;
+            catalog = newCatalog;
         } else {
             System.out.println("It's not OK");
         }
@@ -36,12 +36,12 @@ public class BuilderCatalog {
         if (!file.exists())
             return;
         if (file.isDirectory()) {
-            for (File f : Objects.requireNonNull(file.listFiles())) {
+            for (File f : file.listFiles()) {
                 deletedCatalog(f);
             }
         }
         file.delete();
-        System.out.println("Deleted" + file.getAbsolutePath());
+        System.out.println("Deleted\t" + file.getAbsolutePath());
 
     }
 
@@ -54,8 +54,8 @@ public class BuilderCatalog {
     }
 
     public void readCatalog() {
-        if (this.catalog.isDirectory()) {
-            for (File item : Objects.requireNonNull(this.catalog.listFiles())) {
+        if (catalog.isDirectory()) {
+            for (File item : catalog.listFiles()) {
                 if (item.isDirectory()) {
                     System.out.println(item.getName() + "\t folder");
                 } else {
