@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Shop {
     private LinkedHashSet list;
-    private int numberShop;
+    static private int numberShop;
 
 
     public void setList(LinkedHashSet list) {
@@ -55,8 +55,7 @@ public class Shop {
     }
 
     public void editProduct(Product product) {
-        Scanner scanner = new Scanner(System.in);
-        String answer;
+
         boolean matches = false;
         for (Product p : getList()) {
             if (p.getId() == product.getId()) {
@@ -68,6 +67,8 @@ public class Shop {
             }
         }
         if (!matches) {
+            Scanner scanner = new Scanner(System.in);
+            String answer;
             System.out.println("This product isn't in this shop. Would you like add it? Can You enter Yes or No, please");
             answer = scanner.nextLine();
             if (answer.equals("Yes")) {
