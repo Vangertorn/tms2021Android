@@ -1,20 +1,15 @@
-import java.util.TreeSet;
-
 public class MainShop {
     public static void main(String[] args) {
         Shop shop = new Shop();
-        Product product1 = new Product(12, "BMV", "car", 10000);
-        Product product2 = new Product(13, "Audi", "car", 12000);
-        Product product3 = new Product(19, "Gili", "car", 8000);
-        shop.addShop(product1);
-        shop.addShop(product2);
-        shop.addShop(product3);
-        SortProduct.sortPrise(shop);
-        shop.deleteProduct(19);
-        SortProduct.sortTimeOfAddition(shop);
-        Product product4 = new Product(12, "Volvo", "car", 4000);
-        shop.editProduct(product4);
-        shop.info();
+        Shop shop1 = new Shop();
+        Article article1 = new Article(12, "BMV", "car", 10000);
+        Article article2 = new Article(13, "Audi", "car", 12000);
+        Article article3 = new Article(19, "Gili", "car", 8000);
+        shop.addProduct(article1);
+        shop.addProduct(article2);
+        shop.addProduct(article3);
+        Menu menuShop = new Menu(shop);
+        menuShop.start();
 
 
     }

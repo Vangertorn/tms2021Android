@@ -1,10 +1,8 @@
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class Shop {
     private LinkedHashSet list;
-    static private int numberShop;
+    private static int numberShop;
 
 
     public void setList(LinkedHashSet list) {
@@ -20,23 +18,31 @@ public class Shop {
     }
 
     public Shop() {
-        list = new LinkedHashSet<Product>();
+        list = new LinkedHashSet<Article>();
         numberShop++;
     }
 
-    public void addShop(Product product) {
-        if (!list.add(product)) {
-            System.out.println(product.getName() + "\tThis product already here");
+    public void addProduct(Article article) {
+        if (!list.add(article)) {
+            System.out.println(article.getName() + "\tThis article already here");
         }
     }
 
-    public LinkedHashSet<Product> getList() {
+    public void addProduct() {
+        ReaderArticle readerArticle = new ReaderArticle();
+
+        if (!list.add(readerArticle.reader())) {
+            System.out.println(readerArticle.reader().getName() + "\tThis article already here");
+        }
+    }
+
+    public LinkedHashSet<Article> getList() {
         return list;
     }
 
     public void deleteProduct(int id) {
         boolean b = true;
-        for (Product p : getList()) {
+        for (Article p : getList()) {
             if (p.getId() == id) {
                 getList().remove(p);
                 System.out.println(p.getName() + "\t" + p.getId() + "\t delete from shop" + numberShop);
@@ -44,37 +50,52 @@ public class Shop {
             }
         }
         if (b) {
-            System.out.println("Product with id\t" + id + "\t isn't in this shop ");
+            System.out.println("Article with id\t" + id + "\t isn't in this shop ");
         }
     }
 
     public void info() {
-        for (Product i : getList()) {
+        for (Article i : getList()) {
             System.out.println(i.getName());
         }
     }
 
-    public void editProduct(Product product) {
-
-        boolean matches = false;
-        for (Product p : getList()) {
-            if (p.getId() == product.getId()) {
-                p.setPrice(product.getPrice());
-                p.setName(product.getName());
-                p.setType(product.getName());
-                matches = true;
-                System.out.println("Edit completed");
+    public void editArticle(int id) {
+        if (getList().contains(new Article(id))) {
+            Article a = (ReaderArticle.readerEdit(id));
+            for (Article p : getList()) {
+                if (p.getId() == a.getId()) {
+                    p.setPrice(a.getPrice());
+                    p.setName(a.getName());
+                    p.setType(a.getName());
+                    System.out.println("Edit completed");
+                }
             }
-        }
-        if (!matches) {
+        } else {
             Scanner scanner = new Scanner(System.in);
             String answer;
-            System.out.println("This product isn't in this shop. Would you like add it? Can You enter Yes or No, please");
+            System.out.println("This article isn't in this shop. Would you like add it? " +
+                    "Can You enter 1 if You want add it" +
+                    " or 2 if You want add it please");
             answer = scanner.nextLine();
-            if (answer.equals("Yes")) {
-                list.add(product);
+            if (answer.equals(1)) {
+                ReaderArticle readerArticle = new ReaderArticle();
+                list.add(readerArticle.reader());
             }
         }
+    }
+
+    public boolean byuArticle(int id, int number) {
+        if (!getList().contains(new Article(id))) {
+            System.out.println("Unfortunately this product is not available in our store");
+            return true;
+        }
+        return false;
+    }
+
+
+    public static void shopNumber() {
+        System.out.println("Now there is\t" + numberShop + "\tshop");
     }
 }
 
