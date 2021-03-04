@@ -3,11 +3,11 @@ package Homework10;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CratingCashRegister {
-    private final List<CashRegister> allCashRegister;
+public class Shop {
+    private final List<CashRegister> allCashRegisterInShop;
 
-    public CratingCashRegister() {
-        allCashRegister = new LinkedList<>();
+    public Shop() {
+        allCashRegisterInShop = new LinkedList<>();
     }
 
     public List<CashRegister> cratingAll() {
@@ -15,10 +15,10 @@ public class CratingCashRegister {
         CashRegister cashRegister1 = new CashRegister("Sveta", "Euro", 3000);
         CashRegister cashRegister2 = new CashRegister("Galya", "Rub", 1000);
         CashRegister cashRegister3 = new CashRegister("Tanya", "Rub", 2000);
-        allCashRegister.add(cashRegister);
-        allCashRegister.add(cashRegister1);
-        allCashRegister.add(cashRegister2);
-        allCashRegister.add(cashRegister3);
-        return allCashRegister;
+        allCashRegisterInShop.add(cashRegister);
+        allCashRegisterInShop.add(cashRegister1);
+        allCashRegisterInShop.add(cashRegister2);
+        allCashRegisterInShop.add(cashRegister3);
+        return allCashRegisterInShop;
     }
 }

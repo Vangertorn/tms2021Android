@@ -6,15 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Buyer extends Thread {
-    private int age;
-    private boolean gender;
-    private String address;
-    private int averageBill;
-    private List historyPurchase;
-    private LinkedHashSet basket;
     private List<CashRegister> cashRegisters;
     private String currency;
-
 
     public Buyer(String name, List<CashRegister> cashRegisters, String currency) {
         super(name);
@@ -24,32 +17,34 @@ public class Buyer extends Thread {
 
     @Override
     public void run() {
-
-        synchronized (choiceCashRegister()) {
-            choiceCashRegister().serveCustomer(getName());
-            try {
-                Thread.sleep(choiceCashRegister().getTimeFor1Purchase());
-            } catch (InterruptedException e) {
-                System.out.println("This tread broken");
-            }
-        }
+        choiceCashRegister().serveCustomer(this);
     }
 
     private CashRegister choiceCashRegister() {
-        boolean choice = true;
         Random random = new Random();
         List<CashRegister> similarCashRegister = new LinkedList<>();
         for (CashRegister i : cashRegisters) {
             if (i.getCurrency().equals(currency)) {
                 similarCashRegister.add(i);
-                choice = false;
             }
         }
-        if (choice) {
+        if (similarCashRegister.size() == 0) {
             System.out.println(getName() + "\tWe don't use this currency,  You could use our ATM");
             return null;
         }
-        return similarCashRegister.get(random.nextInt(similarCashRegister.size()));
+        if (similarCashRegister.size() == 1) {
+            return similarCashRegister.get(0);
+        } else {
+            int min = Integer.MAX_VALUE;
+            CashRegister minCash = null;
+            for (CashRegister cash : similarCashRegister) {
+                if (cash.getQueueSize() < min) {
+                    min = cash.getQueueSize();
+                    minCash = cash;
+                }
+            }
+            return minCash;
+        }
     }
 
     public static String choiceCurrency() {
