@@ -16,11 +16,14 @@ public class Buyer extends Thread {
 
     @Override
     public void run() {
-        choiceCashRegister().serveCustomer(this);
+        try {
+            choiceCashRegister().serveCustomer(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private CashRegister choiceCashRegister() {
-        Random random = new Random();
+    private CashRegister choiceCashRegister() throws Exception {
         List<CashRegister> similarCashRegister = new LinkedList<>();
         for (CashRegister i : cashRegisters) {
             if (i.getCurrency().equals(currency)) {
@@ -28,8 +31,7 @@ public class Buyer extends Thread {
             }
         }
         if (similarCashRegister.size() == 0) {
-            System.out.println(getName() + "\tWe don't use this currency,  You could use our ATM");
-            return null;
+            throw new Exception(getName() + "\tWe don't use this currency,  You could use our ATM");
         }
         if (similarCashRegister.size() == 1) {
             return similarCashRegister.get(0);

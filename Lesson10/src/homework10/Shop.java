@@ -10,15 +10,11 @@ public class Shop {
         allCashRegisterInShop = new LinkedList<>();
     }
 
-    public List<CashRegister> cratingAll() {
-        CashRegister cashRegister = new CashRegister("Tamara", "Dollar", 5000);
-        CashRegister cashRegister1 = new CashRegister("Sveta", "Euro", 3000);
-        CashRegister cashRegister2 = new CashRegister("Galya", "Rub", 1000);
-        CashRegister cashRegister3 = new CashRegister("Tanya", "Rub", 2000);
-        allCashRegisterInShop.add(cashRegister);
-        allCashRegisterInShop.add(cashRegister1);
-        allCashRegisterInShop.add(cashRegister2);
-        allCashRegisterInShop.add(cashRegister3);
+    public List<CashRegister> crateAll() {
+        allCashRegisterInShop.add(new CashRegister("Tamara", "Dollar", 5000));
+        allCashRegisterInShop.add(new CashRegister("Sveta", "Euro", 3000));
+        allCashRegisterInShop.add(new CashRegister("Galya", "Rub", 1000));
+        allCashRegisterInShop.add(new CashRegister("Tanya", "Rub", 2000));
         return allCashRegisterInShop;
     }
 }
