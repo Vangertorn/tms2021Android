@@ -10,7 +10,7 @@ public class Shop {
         allCashRegisterInShop = new LinkedList<>();
     }
 
-    public List<CashRegister> crateAll() {
+    public List<CashRegister> createAll() {
         allCashRegisterInShop.add(new CashRegister("Tamara", "Dollar", 5000));
         allCashRegisterInShop.add(new CashRegister("Sveta", "Euro", 3000));
         allCashRegisterInShop.add(new CashRegister("Galya", "Rub", 1000));

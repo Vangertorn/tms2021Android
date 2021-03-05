@@ -1,5 +1,7 @@
 package homework10;
 
+import homework10.Exception.NotCurrencyException;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -31,7 +33,7 @@ public class Buyer extends Thread {
             }
         }
         if (similarCashRegister.size() == 0) {
-            throw new Exception(getName() + "\tWe don't use this currency,  You could use our ATM");
+            throw new NotCurrencyException("\tWe don't use this currency,  You could use our ATM");
         }
         if (similarCashRegister.size() == 1) {
             return similarCashRegister.get(0);

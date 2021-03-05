@@ -5,7 +5,7 @@ import java.util.List;
 public class Main10 {
     public static void main(String[] args) {
         Shop Shop = new Shop();
-        List allCash = Shop.crateAll();
+        List allCash = Shop.createAll();
         Buyer buyer0 = new Buyer("Tolya",allCash,"Tugrik");
         buyer0.start();
         try {
