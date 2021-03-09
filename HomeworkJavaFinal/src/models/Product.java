@@ -1,3 +1,5 @@
+package models;
+
 public class Product extends Article {
     private int amount;
 
@@ -13,12 +15,4 @@ public class Product extends Article {
 
     }
 
-    public Product(int id) {
-        this.setId(id);
-    }
-
-    public Product(int id, String name, String type, int price, int amount) {
-        super(id, name, type, price);
-        this.amount = amount;
-    }
 }

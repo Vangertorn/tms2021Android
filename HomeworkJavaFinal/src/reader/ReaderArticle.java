@@ -1,19 +1,29 @@
-import java.util.Scanner;
+package reader;
 
-public class ReaderArticle implements Reader {
+import models.Article;
+import reader.interfaces.ReaderA;
+
+
+public class ReaderArticle implements ReaderA {
+    ReaderFromTerminal reader = new ReaderFromTerminal();
+
     @Override
     public Article reader() {
         Article article = new Article();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Could You enter id new article,please");
-        int id = scanner.nextInt();
-        scanner.nextLine();
+        int id = reader.readerId();
+        while (id == 0) {
+            id = reader.readerId();
+        }
         System.out.println("Could You enter name new article,please");
-        String name = scanner.nextLine();
+        String name = reader.readerString();
         System.out.println("Could You enter type new article,please");
-        String type = scanner.nextLine();
+        String type = reader.readerString();
         System.out.println("Could You enter price new article,please");
-        int price = scanner.nextInt();
+        int price = reader.readerInt();
+        while (price <= 0) {
+            System.out.println("Price can't be below zero, enter correct price new article,please");
+            price = reader.readerInt();
+        }
         article.setId(id);
         article.setName(name);
         article.setType(type);
@@ -21,15 +31,17 @@ public class ReaderArticle implements Reader {
         return article;
     }
 
-    public static Article readerEdit(int id) {
+    public Article readerEdit(Integer id) {
         Article article = new Article();
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Could You enter name new article,please");
-        String name = scanner.nextLine();
+        String name = reader.readerString();
         System.out.println("Could You enter type new article,please");
-        String type = scanner.nextLine();
+        String type = reader.readerString();
         System.out.println("Could You enter price new article,please");
-        int price = scanner.nextInt();
+        int price = reader.readerInt();
+        while (price <= 0) {
+            price = reader.readerInt();
+        }
         article.setId(id);
         article.setName(name);
         article.setType(type);

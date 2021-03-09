@@ -1,19 +1,15 @@
-import java.util.Scanner;
+package models;
 
 public class Article {
-    private int id;
+    private Integer id;
     private String name;
     private String type;
     private int price;
 
-    public Article(int id) {
-        this.id = id;
-    }
-
     public Article() {
     }
 
-    public Article(int id, String name, String type, int price) {
+    public Article(Integer id, String name, String type, int price) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -27,8 +23,7 @@ public class Article {
 
     public boolean equals(Object o) {
         Article article = (Article) o;
-        if (this.id == article.id) return true;
-        return false;
+        return this.id.equals(article.id);
     }
 
     public int getId() {
