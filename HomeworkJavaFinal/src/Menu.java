@@ -315,8 +315,8 @@ public class Menu {
                 case 5:
                     count = false;
                     break;
+                default: System.err.println("You entered incorrect choice, try again");
             }
-            if (count) System.err.println("You entered incorrect choice, try again");
         }
     }
 
