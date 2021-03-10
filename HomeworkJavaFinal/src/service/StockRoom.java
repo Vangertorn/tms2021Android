@@ -1,13 +1,17 @@
 package service;
 
+import models.Article;
 import models.Product;
 import reader.ReaderFromTerminal;
 import reader.ReaderProduct;
+import supporting.DisplaySeparator;
 
 import java.util.LinkedHashMap;
 
 public class StockRoom {
     private Shop shop;
+
+
     private LinkedHashMap<Integer, Product> stockMap;
     ReaderFromTerminal reader = new ReaderFromTerminal();
 
@@ -19,24 +23,34 @@ public class StockRoom {
         this.stockMap = stockMap;
     }
 
-    public void addProduct(Product product) {
-        if (stockMap.containsValue(product)) {
-            System.out.println(product.getName() + "\tThis product already here");
-            System.out.println("Do You want edit it?\n" +
-                    "If YES - press 1\n" +
-                    "If NO - press 2");
-        } else createNewProduct(product);
+    public void editProduct(Article article) {
+        if (stockMap.containsKey(article.getId())) {
+            stockMap.get(article.getId()).setName(article.getName());
+            stockMap.get(article.getId()).setType(article.getType());
+            stockMap.get(article.getId()).setPrice(article.getPrice());
+        } else {
+            System.err.println(article.getName() + "\t This article isn't in stockRoom");
+
+        }
     }
 
-    public void addNumberProduct(Integer id) {
-        if (stockMap.containsKey(id)) {
-            System.out.println("Could You enter number product, please");
-            stockMap.get(id).setAmount(stockMap.get(id).getAmount() + reader.readerInt());
-        } else if (shop.getArticleMap().containsKey(id)) {
-            ReaderProduct readerProduct = new ReaderProduct();
-            stockMap.put(id, readerProduct.reader(shop.getArticleMap().get(id)));
+    public void editProduct(Product product) {
+        if (stockMap.containsKey(product.getId())) {
+            stockMap.get(product.getId()).setName(product.getName());
+            stockMap.get(product.getId()).setType(product.getType());
+            stockMap.get(product.getId()).setPrice(product.getPrice());
+            stockMap.get(product.getId()).setAmount(product.getAmount());
         } else {
-            System.out.println("Could You have create new product?\n" +
+            System.err.println(product.getName() + "\t This article isn't in stockRoom");
+
+        }
+    }
+
+    public void addProduct(Integer id) {
+        if (stockMap.containsKey(id)) {
+            DisplaySeparator.display();
+            System.out.println(stockMap.get(id).getName() + "\tThis product already here");
+            System.out.println("Do You want edit it?\n" +
                     "If YES - press 1\n" +
                     "If NO - press 2");
             boolean count = true;
@@ -44,8 +58,44 @@ public class StockRoom {
                 switch (reader.readerInt()) {
                     case 1:
                         ReaderProduct readerProduct = new ReaderProduct();
-                        Product newProduct = readerProduct.reader();
-                        addProduct(newProduct);
+                        Product product = readerProduct.reader();
+                        editProduct(product);
+                        shop.editArticle(product);
+                        count = false;
+                        break;
+                    case 2:
+                        count = false;
+                        break;
+                }
+                if (count) System.err.println("You must choose 1 or 2, try again, please");
+            }
+        } else if (shop.getArticleMap().containsKey(id)) {
+            addNumberProduct(id);
+        } else {
+            ReaderProduct readerProduct = new ReaderProduct();
+            Product product = readerProduct.reader(id);
+            createNewProduct(product);
+        }
+    }
+
+    public void addNumberProduct(Integer id) {
+        if (stockMap.containsKey(id)) {
+            DisplaySeparator.display();
+            System.out.println("Could You enter number product, please");
+            stockMap.get(id).setAmount(stockMap.get(id).getAmount() + reader.readerInt());
+        } else if (shop.getArticleMap().containsKey(id)) {
+            ReaderProduct readerProduct = new ReaderProduct();
+            stockMap.put(id, readerProduct.reader(shop.getArticleMap().get(id)));
+        } else {
+            DisplaySeparator.display();
+            System.out.println("Could You have create new product?\n" +
+                    "If YES - press 1\n" +
+                    "If NO - press 2");
+            boolean count = true;
+            while (count) {
+                switch (reader.readerInt()) {
+                    case 1:
+                        addProduct(reader.readerId());
                         count = false;
                         break;
                     case 2:
@@ -53,7 +103,7 @@ public class StockRoom {
                         break;
                 }
                 if (count) {
-                    System.out.println("You must choose 1 or 2, try again, please");
+                    System.err.println("You must choose 1 or 2, try again, please");
                 }
             }
         }
@@ -67,6 +117,7 @@ public class StockRoom {
                 System.out.println("Delete completed successful");
                 successful = false;
             } else {
+                DisplaySeparator.display();
                 System.out.println("You entered incorrect id. Do You want to repeated it?\n" +
                         "If Yes then You can press: 1\n" +
                         "If No then You can press: 2");
@@ -87,6 +138,7 @@ public class StockRoom {
                 System.out.println("Purchase completed successfully");
                 return true;
             } else {
+                DisplaySeparator.display();
                 System.out.println("Unfortunately we don't have as much amount product now.\n" +
                         "You could buy max\t" + stockMap.get(id).getAmount() + "\t product unit\n" +
                         "If You want to buy everything press: 1\n" +
@@ -99,7 +151,7 @@ public class StockRoom {
                         case 2:
                             return true;
                     }
-                    System.out.println("You must choose 1 or 2, try again, please");
+                    System.err.println("You must choose 1 or 2, try again, please");
                 }
             }
         }
@@ -114,5 +166,4 @@ public class StockRoom {
     public LinkedHashMap<Integer, Product> getStockMap() {
         return stockMap;
     }
-
 }

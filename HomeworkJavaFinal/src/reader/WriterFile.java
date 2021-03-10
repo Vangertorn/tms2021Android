@@ -9,7 +9,7 @@ import java.io.*;
 public class WriterFile {
     private static final String FILE_SHOP = "HomeworkJavaFinal/resources/Shop.json";
     private static final String FILE_STOCK_ROOM = "HomeworkJavaFinal/resources/Stock_Room.json";
-    ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public void writerShop(Shop shop) {
         try {

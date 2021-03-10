@@ -1,8 +1,11 @@
 
+import models.Article;
+import models.Product;
 import reader.*;
-import service.Accounting;
+import service.AccountingMenu;
 import service.Shop;
 import service.StockRoom;
+import supporting.DisplaySeparator;
 import supporting.Sort;
 
 
@@ -21,6 +24,7 @@ public class Menu {
 
     public void start() {
         System.out.println("Hello, welcome to the shop \"Yankin and Co\"!");
+        DisplaySeparator.display();
         boolean count = true;
         while (count) {
             System.out.println("If You work in the shop press - 1\n" +
@@ -28,13 +32,14 @@ public class Menu {
             switch (reader.readerInt()) {
                 case 1:
                     String passwordForShop = "1111";
+                    DisplaySeparator.display();
                     System.out.println("You have to enter password, please");
                     if (reader.readerString().equals(passwordForShop)) {
                         while (actionWorker(choiceActionWorker())) {
                         }
                         count = false;
                     } else {
-                        System.out.println("You entered incorrect password.");
+                        System.err.println("You entered incorrect password.");
                     }
                     break;
                 case 2:
@@ -47,10 +52,12 @@ public class Menu {
         WriterFile writer = new WriterFile();
         writer.writerShop(shop);
         writer.writerStockRoom(stockRoom);
+        DisplaySeparator.display();
         System.out.println("Thank You that used our shop");
     }
 
     private Integer choiceActionBuyer() {
+        DisplaySeparator.display();
         System.out.println("Could You chose an action, please:\n" +
                 "Press 1 - \"All article or product in this shop\"\n" +
                 "Press 2 - \"Buy product to the stokeRoom\"\n" +
@@ -61,7 +68,7 @@ public class Menu {
     private boolean actionBuyer(Integer action) {
         switch (action) {
             case 1:
-                sortArticleOrProduct();
+                sortProduct();
                 return true;
             case 2:
                 byuProduct();
@@ -69,17 +76,18 @@ public class Menu {
             case 3:
                 return false;
         }
-        System.out.println("Incorrect selection, try again, please");
+        System.err.println("Incorrect selection, try again, please");
         return true;
     }
 
     private Integer choiceActionWorker() {
+        DisplaySeparator.display();
         System.out.println("Could You chose an action, please:\n" +
                 "Press 1 - \"All article or product in this shop\"\n" +
-                "Press 2 - \"Add article\"\n" +
-                "Press 3 - \"Edit article\"\n" +
+                "Press 2 - \"Add article or product\"\n" +
+                "Press 3 - \"Edit article or product\"\n" +
                 "Press 4 - \"Add product to the stokeRoom\"\n" +
-                "Press 5 - \"Deleted product to the stokeRoom \"\n" +
+                "Press 5 - \"Deleted article or product to the stokeRoom \"\n" +
                 "Press 6 - \"Buy product to the stokeRoom\"\n" +
                 "Press 7 - \"Enter in accounting\"\n" +
                 "Press 8 - \"Exit\"");
@@ -95,7 +103,7 @@ public class Menu {
                 addArticleOrProduct();
                 return true;
             case 3:
-                shop.editArticle(reader.readerId());
+                editProductOrArticle();
                 return true;
             case 4:
                 stockRoom.addNumberProduct(reader.readerId());
@@ -107,24 +115,26 @@ public class Menu {
                 byuProduct();
                 return true;
             case 7:
+                DisplaySeparator.display();
                 String passwordForAccounting = "1111";
                 System.out.println("You try to enter in accounting. You have to enter password, please");
                 if (reader.readerString().equals(passwordForAccounting)) {
                     enterInAccounting();
                 } else {
-                    System.out.println("You entered incorrect password");
+                    System.err.println("You entered incorrect password");
                 }
                 return true;
             case 8:
                 return false;
         }
-        System.out.println("Incorrect selection, try again, please");
+        System.err.println("Incorrect selection, try again, please");
         return true;
     }
 
     private void sortingMethodArticle() {
         boolean count = true;
         while (count) {
+            DisplaySeparator.display();
             System.out.println("Could You chose an sorting method:");
             System.out.println("Press 1 - \"If You want sort article on prices\"\n" +
                     "Press 2 - \"If You want sort article on time addition\"");
@@ -132,6 +142,7 @@ public class Menu {
                 case 1:
                     boolean count1 = true;
                     while (count1) {
+                        DisplaySeparator.display();
                         System.out.println("Press 1 - \"If You want sort article on prices in ascending order\"\n" +
                                 "Press 2 - \"If You want sort article on prices in descending order\"");
                         switch (reader.readerInt()) {
@@ -144,7 +155,7 @@ public class Menu {
                                 count1 = false;
                                 break;
                         }
-                        if (count1) System.out.println("Incorrect selection, try again, please");
+                        if (count1) System.err.println("Incorrect selection, try again, please");
                     }
                     count = false;
                     break;
@@ -154,13 +165,14 @@ public class Menu {
                     count = false;
                     break;
             }
-            if (count) System.out.println("Incorrect selection, try again, please");
+            if (count) System.err.println("Incorrect selection, try again, please");
         }
     }
 
     private void sortingMethodProduct() {
         boolean count = true;
         while (count) {
+            DisplaySeparator.display();
             System.out.println("Could You chose an sorting method:");
             System.out.println("Press 1 - \"If You want sort product on prices\"\n" +
                     "Press 2 - \"If You want sort product on time addition\"");
@@ -168,6 +180,7 @@ public class Menu {
                 case 1:
                     boolean count1 = true;
                     while (count1) {
+                        DisplaySeparator.display();
                         System.out.println("Press 1 - \"If You want sort product on prices in ascending order\"\n" +
                                 "Press 2 - \"If You want sort product on prices in descending order\"");
                         switch (reader.readerInt()) {
@@ -180,7 +193,7 @@ public class Menu {
                                 count1 = false;
                                 break;
                         }
-                        if (count1) System.out.println("Incorrect selection, try again, please");
+                        if (count1) System.err.println("Incorrect selection, try again, please");
                     }
                     count = false;
                     break;
@@ -189,36 +202,42 @@ public class Menu {
                     count = false;
                     break;
             }
-            if (count) System.out.println("Incorrect selection, try again, please");
+            if (count) System.err.println("Incorrect selection, try again, please");
         }
     }
 
     private void addArticleOrProduct() {
         boolean count = true;
         while (count) {
+            DisplaySeparator.display();
             System.out.println("If do You want to create article press - 1\n" +
                     "If do You want to create product press - 2");
             switch (reader.readerInt()) {
                 case 1:
-                    ReaderArticle readerArticle = new ReaderArticle();
-                    shop.addArticle(readerArticle.reader());
+                    Integer id = reader.readerId();
+                    if (shop.addArticle(id)&&stockRoom.getStockMap().containsKey(id)){
+                        stockRoom.getStockMap().get(id).setName(shop.getArticleMap().get(id).getName());
+                        stockRoom.getStockMap().get(id).setType(shop.getArticleMap().get(id).getType());
+                        stockRoom.getStockMap().get(id).setPrice(shop.getArticleMap().get(id).getPrice());
+                    }
                     count = false;
                     break;
                 case 2:
-                    ReaderProduct readerProduct = new ReaderProduct();
-                    stockRoom.addProduct(readerProduct.reader());
+                    stockRoom.addProduct(reader.readerId());
+
                     count = false;
                     break;
             }
-            if (count) System.out.println("You entered incorrect choice, try again");
+            if (count) System.err.println("You entered incorrect choice, try again");
         }
     }
 
     private void deletedProductOrArticle() {
         boolean count = true;
         while (count) {
+            DisplaySeparator.display();
             System.out.println("If do You want to deleted article press - 1\n" +
-                    "If do You want to deleted product press - 2\n");
+                    "If do You want to deleted product press - 2");
             switch (reader.readerInt()) {
                 case 1:
                     Integer id = reader.readerId();
@@ -231,14 +250,50 @@ public class Menu {
                     count = false;
                     break;
             }
-            if (count) System.out.println("You entered incorrect choice, try again");
+            if (count) System.err.println("You entered incorrect choice, try again");
         }
     }
 
-    private void enterInAccounting() {
-        Accounting accounting = new Accounting(stockRoom);
+    private void editProductOrArticle() {
         boolean count = true;
         while (count) {
+            DisplaySeparator.display();
+            System.out.println("If do You want to edit article press - 1\n" +
+                    "If do You want to edit product press - 2");
+            switch (reader.readerInt()) {
+                case 1:
+                    Integer id = reader.readerId();
+                    if (shop.getArticleMap().containsKey(id)) {
+                        Article article = new ReaderArticle().readerEdit(id);
+                        shop.editArticle(article);
+                        stockRoom.editProduct(article);
+                    } else {
+                        System.err.println("This article isn't in this shop.");
+                    }
+                    count = false;
+                    break;
+                case 2:
+                    id = reader.readerId();
+                    if (stockRoom.getStockMap().containsKey(id)){
+                        Product product = new ReaderProduct().reader(id);
+                        stockRoom.editProduct(product);
+                        shop.editArticle(product);
+                    }else {
+                        System.err.println("This product isn't in this shop.");
+                    }
+                    count = false;
+                    break;
+            }
+            if (count) System.err.println("You entered incorrect choice, try again");
+        }
+
+    }
+
+    private void enterInAccounting() {
+        AccountingMenu accounting = new AccountingMenu(stockRoom);
+        boolean count = true;
+        while (count) {
+            DisplaySeparator.display();
             System.out.println("If do You want receive product types press - 1\n" +
                     "If do You want receive product amount press - 2\n" +
                     "If do You want receive average price products  press - 3\n" +
@@ -261,6 +316,7 @@ public class Menu {
                     count = false;
                     break;
             }
+            if (count) System.err.println("You entered incorrect choice, try again");
         }
     }
 
@@ -269,14 +325,19 @@ public class Menu {
         int amount = reader.readerAmount();
         if (shop.buyArticle(id)) {
             if (!stockRoom.buyProduct(id, amount)) {
-                System.out.println("Unfortunately we don't have this product now");
+                System.err.println("Unfortunately we don't have this product now");
             }
         }
+    }
+
+    private void sortProduct() {
+        sortingMethodProduct();
     }
 
     private void sortArticleOrProduct() {
         boolean count = true;
         while (count) {
+            DisplaySeparator.display();
             System.out.println("If You want sort article press - 1\n" +
                     "If You want sort product press - 2");
             switch (reader.readerInt()) {
@@ -289,7 +350,7 @@ public class Menu {
                     count = false;
                     break;
             }
-            if (count) System.out.println("Incorrect selection, try again, please");
+            if (count) System.err.println("Incorrect selection, try again, please");
         }
     }
 }
